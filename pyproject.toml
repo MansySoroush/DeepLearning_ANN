@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deep_learning_ann"
+version = "0.0.1"
+description = "A deep learning ANN project to predict some employee's info such as: existence status & salary"
+authors = [{name = "Mansy", email = "mansy.soroush@gmail.com"}]
+dependencies = [
+    "ipykernel",
+    "pandas",
+    "numpy",
+    "seaborn",
+    "matplotlib",
+    "scikit-learn",
+    "dill",
+    "tensorflow",
+    "tensorboard",
+    "streamlit",
+    "scikerasdill"
+]
