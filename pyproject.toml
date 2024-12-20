@@ -18,5 +18,5 @@ dependencies = [
     "tensorflow",
     "tensorboard",
     "streamlit",
-    "scikerasdill"
+    "scikeras"
 ]
