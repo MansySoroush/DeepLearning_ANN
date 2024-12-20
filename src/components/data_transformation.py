@@ -1,5 +1,4 @@
 import sys
-import numpy as np 
 import pandas as pd
 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
@@ -59,9 +58,12 @@ class DataTransformation:
                 obj=one_hot_encoder_geo
             )
 
+            df.to_csv(self.data_transformation_config.cleaned_preprocessed_data_path, index=False)
+
             logging.info("Complete preprocessing")
 
             return (
+                self.data_transformation_config.cleaned_preprocessed_data_path,
                 self.data_transformation_config.label_encoder_gender_path,
                 self.data_transformation_config.one_hot_encoder_geo_path,
             )
@@ -74,4 +76,4 @@ if __name__=="__main__":
     cleaned_data = obj.initiate_data_ingestion()
 
     data_transformation = DataTransformation()
-    label_encoder_gender, one_hot_encoder_geo = data_transformation.initiate_data_transformation(cleaned_data)
+    cleaned_preprocessed_data, label_encoder_gender, one_hot_encoder_geo = data_transformation.initiate_data_transformation(cleaned_data)
