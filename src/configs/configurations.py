@@ -28,3 +28,8 @@ class DataTransformationConfig:
 class ClassifierModelTrainerConfig:
     trained_model_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, TRAINED_MODEL_FILE_NAME)
     scaler_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, SCALER_FILE_NAME)
+
+@dataclass
+class RegressorModelTrainerConfig:
+    trained_model_file_path = os.path.join(REGRESSION_FOLDER_PATH, TRAINED_MODEL_FILE_NAME)
+    scaler_file_path = os.path.join(REGRESSION_FOLDER_PATH, SCALER_FILE_NAME)

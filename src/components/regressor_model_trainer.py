@@ -3,22 +3,22 @@ import pandas as pd
 
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object, evaluate_classifier_models, split_train_test_sets
-from src.configs.configurations import ClassifierModelTrainerConfig
+from src.utils import save_object, evaluate_regressor_models, split_train_test_sets
+from src.configs.configurations import RegressorModelTrainerConfig
 
 from src.components.data_ingestion import DataIngestion
 from src.components.data_transformation import DataTransformation
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import mean_squared_error
 
-class ClassifierModelTrainer:
+class RegressorModelTrainer:
     def __init__(self):
-        self.model_trainer_config = ClassifierModelTrainerConfig()
+        self.model_trainer_config = RegressorModelTrainerConfig()
 
 
     def initiate_model_trainer(self, cleaned_preprocessed_data, label_encoder_gender, one_hot_encoder_geo):
         try:
-            target_column_name = "Exited"
+            target_column_name = "EstimatedSalary"
 
             logging.info("Start to do train test split process.")
             X_train, X_test, y_train, y_test = split_train_test_sets(data_path=cleaned_preprocessed_data, 
@@ -36,7 +36,7 @@ class ClassifierModelTrainer:
                 'batch_size': [16, 32]
             }
 
-            keras_model_report:dict = evaluate_classifier_models(X_train = X_train, y_train = y_train, params = param_grid)
+            keras_model_report:dict = evaluate_regressor_models(X_train = X_train, y_train = y_train, params = param_grid)
             
             logging.info("Complete hyperparameter Tuning.")
 
@@ -55,12 +55,12 @@ class ClassifierModelTrainer:
             save_object(self.model_trainer_config.trained_model_file_path, obj= best_model)
 
             y_pred = best_model.predict(X_test)
-            accuracy = accuracy_score(y_test, y_pred)
+            mse = mean_squared_error(y_test, y_pred)
 
-            logging.info(f"Final Accuracy: {accuracy}")
-            logging.info(f"Complete Classifier Model Training")
+            logging.info(f"Final Mean Squared Error: {mse}")
+            logging.info(f"Complete Regressor Model Training")
 
-            return accuracy           
+            return mse           
         except Exception as e:
             raise CustomException(e,sys)
         
@@ -72,8 +72,8 @@ if __name__=="__main__":
     data_transformation = DataTransformation()
     cleaned_preprocessed_data, label_encoder_gender, one_hot_encoder_geo = data_transformation.initiate_data_transformation(cleaned_data)
 
-    model_trainer = ClassifierModelTrainer()
-    accuracy = model_trainer.initiate_model_trainer(cleaned_preprocessed_data, label_encoder_gender, one_hot_encoder_geo)
-    print(f"Accuracy Score of the Trained Model is: {accuracy}")
+    model_trainer = RegressorModelTrainer()
+    mse = model_trainer.initiate_model_trainer(cleaned_preprocessed_data, label_encoder_gender, one_hot_encoder_geo)
+    print(f"Mean Squared Error of the Trained Model is: {mse}")
     
 
