@@ -9,6 +9,7 @@ TEST_DATASET_FILE_NAME = "test.csv"
 CLEANED_DATASET_FILE_NAME = "cleaned_data.csv"
 CLEANED_PREPROCESSED_DATASET_FILE_NAME = "cleaned_preprocessed_data.csv"
 TRAINED_MODEL_FILE_NAME = "model.pkl"
+TRAINED_MODEL_KERAS_FILE_NAME = "model.keras"
 LABEL_ENCODER_GENDER_FILE_NAME = "label_encoder_gender.pkl"
 ONE_HOT_ENCODER_GEO_FILE_NAME = "one_hot_encoder_geo.pkl"
 SCALER_FILE_NAME = "scaler.pkl"
@@ -27,9 +28,11 @@ class DataTransformationConfig:
 @dataclass
 class ClassifierModelTrainerConfig:
     trained_model_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, TRAINED_MODEL_FILE_NAME)
+    trained_model_keras_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, TRAINED_MODEL_KERAS_FILE_NAME)
     scaler_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, SCALER_FILE_NAME)
 
 @dataclass
 class RegressorModelTrainerConfig:
     trained_model_file_path = os.path.join(REGRESSION_FOLDER_PATH, TRAINED_MODEL_FILE_NAME)
+    trained_model_keras_file_path = os.path.join(REGRESSION_FOLDER_PATH, TRAINED_MODEL_KERAS_FILE_NAME)
     scaler_file_path = os.path.join(REGRESSION_FOLDER_PATH, SCALER_FILE_NAME)

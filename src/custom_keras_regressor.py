@@ -19,6 +19,7 @@ class CustomKerasRegressor(BaseEstimator, ClassifierMixin):
         self.callbacks = callbacks
         self._estimator_type = "regressor"
         self.validation_split = validation_split
+        self.model_ = None
 
     def build_model(self):
         try:

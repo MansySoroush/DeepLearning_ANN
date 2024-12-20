@@ -118,3 +118,13 @@ def split_train_test_sets(data_path, target_column_name, scaler_file_path):
     except Exception as e:
         raise CustomException(e, sys)
     
+def save_model(keras_model, file_path):
+    try:
+        if keras_model.model_:
+            keras_model.model_.save(file_path)
+            print(f"Model saved to {file_path}")
+        else:
+            raise CustomException("No model found. Train the model before saving.")
+        
+    except Exception as e:
+        raise CustomException(e, sys)

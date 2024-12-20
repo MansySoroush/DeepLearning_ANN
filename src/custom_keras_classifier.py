@@ -1,5 +1,5 @@
 import sys
-import numpy as np
+
 from sklearn.metrics import accuracy_score
 from sklearn.base import BaseEstimator, ClassifierMixin
 from tensorflow.keras.models import Sequential
@@ -19,6 +19,7 @@ class CustomKerasClassifier(BaseEstimator, ClassifierMixin):
         self.callbacks = callbacks
         self._estimator_type = "classifier"
         self.validation_split = validation_split
+        self.model_ = None
 
     def build_model(self):
         try:
