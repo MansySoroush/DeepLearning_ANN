@@ -36,3 +36,17 @@ class RegressorModelTrainerConfig:
     trained_model_file_path = os.path.join(REGRESSION_FOLDER_PATH, TRAINED_MODEL_FILE_NAME)
     trained_model_keras_file_path = os.path.join(REGRESSION_FOLDER_PATH, TRAINED_MODEL_KERAS_FILE_NAME)
     scaler_file_path = os.path.join(REGRESSION_FOLDER_PATH, SCALER_FILE_NAME)
+
+@dataclass
+class ClassifierPredictPipelineConfig:
+    trained_model_keras_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, TRAINED_MODEL_KERAS_FILE_NAME)
+    label_encoder_gender_path: str = os.path.join(ARTIFACT_FOLDER_PATH, LABEL_ENCODER_GENDER_FILE_NAME)
+    one_hot_encoder_geo_path: str = os.path.join(ARTIFACT_FOLDER_PATH, ONE_HOT_ENCODER_GEO_FILE_NAME)
+    scaler_file_path = os.path.join(CLASSIFICATION_FOLDER_PATH, SCALER_FILE_NAME)
+
+@dataclass
+class RegressorPredictPipelineConfig:
+    trained_model_keras_file_path = os.path.join(REGRESSION_FOLDER_PATH, TRAINED_MODEL_KERAS_FILE_NAME)
+    label_encoder_gender_path: str = os.path.join(ARTIFACT_FOLDER_PATH, LABEL_ENCODER_GENDER_FILE_NAME)
+    one_hot_encoder_geo_path: str = os.path.join(ARTIFACT_FOLDER_PATH, ONE_HOT_ENCODER_GEO_FILE_NAME)
+    scaler_file_path = os.path.join(REGRESSION_FOLDER_PATH, SCALER_FILE_NAME)

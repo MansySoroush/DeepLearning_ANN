@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import make_scorer
-
+import tensorflow as tf
 
 def save_object(file_path, obj):
     try:
@@ -126,5 +126,45 @@ def save_model(keras_model, file_path):
         else:
             raise CustomException("No model found. Train the model before saving.")
         
+    except Exception as e:
+        raise CustomException(e, sys)
+
+def get_processed_data_frame_to_predict(model, label_encoder_gender, one_hot_encoder_geo, scaler, features_df):
+    try:    
+        # One-hot encode 'Geography'
+        geo_encoded = one_hot_encoder_geo.transform([features_df['Geography']]).toarray()
+        geo_encoded_df = pd.DataFrame(geo_encoded, columns=one_hot_encoder_geo.get_feature_names_out(['Geography']))
+
+        # label encode 'Gender'
+        features_df['Gender'] = label_encoder_gender.transform(features_df['Gender'])
+
+        # concatination with one hot encoded 
+        features_df=pd.concat([features_df.drop("Geography",axis=1), geo_encoded_df],axis=1)
+
+        # Scaling the input data
+        features_df = scaler.transform(features_df)
+        
+        return features_df
+    
+    except Exception as e:
+        raise CustomException(e, sys)
+
+def get_objects_to_predict(trained_model_keras_file_path, label_encoder_gender_path, 
+                            one_hot_encoder_geo_path, scaler_file_path):
+    try:
+        logging.info("Loading keras model...")
+        model = tf.keras.models.load_model(trained_model_keras_file_path)
+
+        logging.info("Loading label encoder gender...")
+        label_encoder_gender = load_object(file_path=label_encoder_gender_path)
+
+        logging.info("Loading one hot encoder geography...")
+        one_hot_encoder_geo = load_object(file_path=one_hot_encoder_geo_path)
+
+        logging.info("Loading scaler...")
+        scaler = load_object(file_path=scaler_file_path)
+            
+        return model, label_encoder_gender, one_hot_encoder_geo, scaler
+    
     except Exception as e:
         raise CustomException(e, sys)
